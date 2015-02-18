@@ -1,0 +1,16 @@
+parameters:
+    symfonysocial.user.provider.class: Malkos\UserBundle\Security\Core\User\FOSUBUserProvider
+    symfonysocial.services.social.class: Malkos\UserBundle\Services\SocialService
+
+services:
+    symfonysocial.user.provider:
+        class: "%symfonysocial.user.provider.class%"
+        arguments: [@session,@fos_user.user_manager, {facebook: facebook_id, google: google_id, github: github_id, linkedin: linkedin_id, twitter: twitter_id}]
+
+    symfonysocial.oauthfailurehandler:
+        class: Malkos\UserBundle\Handler\OAuthFailureHandler
+        arguments: [@router]
+
+    symfonysocial.services.social:
+        class: "%symfonysocial.services.social.class%"
+        arguments: [@fos_user.user_manager]

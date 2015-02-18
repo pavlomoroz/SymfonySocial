@@ -1,0 +1,61 @@
+{% block head %}
+    <link rel="icon" sizes="16x16" href="{{ asset('logo.png') }}" />
+
+    <style>
+        a.services {
+            width: 32px;
+            height: 32px;
+            display: block
+        background: url('{{ asset('login.png') }}') no-repeat;
+            float: left;
+            margin: 2px
+        }
+    </style>
+{% endblock %}
+
+<div style="float: left; margin-right: 50px;">
+    <h1>Create User</h1>
+    {{ form(register_form) }}
+</div>
+
+<div style="float: left;">
+    <h1>Or Connect</h1>
+    {% if  not (service == 'facebook') %}
+        <a class="services" href="{{ url("malkos_user_servicelogin", {service: "facebook"}) }}"
+           style="background: url('{{ asset('login.png') }}') no-repeat;">
+        </a>
+    {% endif %}
+
+    {% if  not (service == 'google') %}
+    <a class="services" href="{{ url("malkos_user_servicelogin", {service: "google"}) }}"
+       style="background: url('{{ asset('login.png') }}') no-repeat -32px 0px;">
+    </a>
+    {% endif %}
+
+    {% if  not (service == 'linkedin') %}
+    <a class="services" href="{{ url("malkos_user_servicelogin", {service: "linkedin"}) }}"
+       style="background: url('{{ asset('login.png') }}') no-repeat -32px -32px;">
+    </a>
+    {% endif %}
+
+    {% if  not (service == 'twitter') %}
+    <a class="services" href="{{ url("malkos_user_servicelogin", {service: "twitter"}) }}"
+       style="background: url('{{ asset('login.png') }}') no-repeat -0px -64px;">
+    </a>
+    {% endif %}
+
+    {% if  not (service == 'github') %}
+    <a class="services" href="{{ url("malkos_user_servicelogin", {service: "github"}) }}"
+       style="background: url('{{ asset('github.ico') }}') no-repeat;">
+    </a>
+    {% endif %}
+
+    <div style="clear: both"></div>
+    {% if error %}
+        <div><h2>{{ error }}</h2></div>
+    {% endif %}
+    <div style="margin-top: 10px;">
+        <h3>Login:</h3>
+        {{ form(form_login) }}
+    </div>
+</div>

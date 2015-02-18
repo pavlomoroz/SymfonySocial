@@ -1,0 +1,12 @@
+{#{% extends "MalkosUserBundle::layout.html.twig" %}#}
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block content %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") == false %}
+        <h1>Hello Guest!</h1>
+        <div>
+            <h2>Please, login or register!</h2>
+        </div>
+    {% else %}
+        <h1>Hello  {{ app.user.username }}!</h1>
+    {% endif %}
+{% endblock %}

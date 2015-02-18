@@ -1,0 +1,67 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="icon" sizes="16x16" href="{{ asset('logo.png') }}" />
+
+    <style>
+        a.services {
+            width: 32px;
+            height: 32px;
+            display: block
+            background: url('{{ asset('login.png') }}') no-repeat;
+            float: left;
+            margin: 2px
+        }
+    </style>
+{% endblock %}
+
+{% block title 'Malkos User Bundle' %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="flash-message">
+            <em>Notice</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% block content_header %}
+        <ul id="menu">
+            {% block content_header_more %}
+                <li><a href="{{ path('malkos_user_home') }}">Main</a></li>
+                {#<li><a href="{{ path('sonata_admin_redirect') }}">Admin</a></li>#}
+
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li><a href="{{ path('fos_user_profile_edit') }}">Edit Profile</a></li>
+                {% endif %}
+            {% endblock %}
+        </ul>
+
+        <div style="float: right; margin-top: -20px;">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                Hello {{ app.user.username }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'Logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'Login'|trans({}, 'FOSUserBundle') }}</a> |
+                <a href="{{ path('fos_user_registration_register') }}">{{ 'Register'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+        <div style="clear: both"></div>
+    {% endblock %}
+
+    <div class="block">
+        {% block content %}
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        {% endblock %}
+    </div>
+
+    {% if code is defined %}
+        <h2>Code behind this page</h2>
+        <div class="block">
+            <div class="symfony-content">{{ code|raw }}</div>
+        </div>
+    {% endif %}
+{% endblock %}
